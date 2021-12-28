@@ -1,0 +1,24 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 54% 40%;
+    grid-gap: 5px;
+    background-color: #fff;
+    color: #444;
+    
+}
+
+.teclado {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-gap: 5px;
+    background-color: #fff;
+    color: #444;
+}
+  
+  .box {
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+    //font-size: 150%;
+  }

@@ -1,0 +1,16 @@
+<div class="wrapper">
+    <div class="box a">
+        <label mat-input>{{ numTarj | creditCardMaskPipe}}</label>
+    </div>
+    <div class="box b">
+        
+            <button mat-mini-fab
+                *ngFor="let n of numSequence(9);let i = index;"
+                (click)="pushNumber(i)"
+            >{{i+1}}</button>            
+        
+        <button mat-mini-fab>*</button>
+        <button mat-mini-fab (click)="pushNumber(-1)">0</button>
+        <button mat-mini-fab>#</button>
+    </div>
+</div>
