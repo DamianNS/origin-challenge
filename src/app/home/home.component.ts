@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
 
   numTarj:string = 'XXXXXXXXXXXXXXXX';
-
+  isDisabled = false;
   indice=0;
 
   constructor(
@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
     this.indice+=1;
     if(this.indice>15){
       this.indice=0;
+      this.isDisabled = true;
+      return;
     }
     this.setChar('_', this.indice);
   }
@@ -47,4 +49,14 @@ export class HomeComponent implements OnInit {
     }    
   }
 
+  onClickReset(){
+    this.numTarj = 'XXXXXXXXXXXXXXXX';
+    this.indice=0;
+    this.isDisabled = false;
+    this.setChar('_', 0);
+  }
+
+  onClickAceptar(){
+    
+  }
 }
