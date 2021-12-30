@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TarjetasService } from '../tarjetas.service';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +11,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
 
+  @Output() cardOk = new EventEmitter<string>();
+
   numTarj:string = 'XXXXXXXXXXXXXXXX';
   isDisabled = false;
   indice=0;
 
   constructor(
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private CardServ: TarjetasService
   ) { }
 
   ngOnInit(): void {
@@ -36,17 +42,7 @@ export class HomeComponent implements OnInit {
   }
 
   setChar(char:string, index:number){
-    if(index == 0){
-      let numTarjAux = this.numTarj.slice(1);
-      this.numTarj = char+numTarjAux;      
-    }else if(index == 15){
-      let numTarjAux = this.numTarj.substring(0,15);
-      this.numTarj = numTarjAux+char;
-    }else{      
-      let numTarjAux1 = this.numTarj.substring(0,index);
-      let numTarjAux2 = this.numTarj.slice(index+1);
-      this.numTarj = numTarjAux1+char+numTarjAux2;      
-    }    
+    this.numTarj = (new Utils()).setChar(this.numTarj, char, index);
   }
 
   onClickReset(){
@@ -56,7 +52,29 @@ export class HomeComponent implements OnInit {
     this.setChar('_', 0);
   }
 
-  onClickAceptar(){
-    
+  async onClickAceptar(){
+    console.log('onClickAceptar',this.numTarj);
+    this.CardServ.isExist(this.numTarj).subscribe( (val:boolean) => {
+      if( val ){
+        console.log('await');
+        this.cardOk.emit(this.numTarj);
+      }else{
+        console.log('else');
+        this.onClickReset();
+        alert("La tarjeta no existe");
+      }  
+    }, (error:HttpErrorResponse) => {
+      console.log('onClickAceptar error:', error);
+      this.onClickReset();
+      if(error.status == 404){
+        alert('La tarjeta no existe');
+      }else if(error.status == 400){
+        alert('La tarjeta esta bloqueada');
+      }else{
+        alert(error.message);
+      }
+      
+    }
+    );
   }
 }

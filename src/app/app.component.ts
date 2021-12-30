@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  @ViewChild('stepper') stepper!:MatStepper;
+
   title = 'origin-front';
 
   firstFormGroup!: FormGroup;
@@ -23,5 +26,13 @@ export class AppComponent {
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
     });
+  }
+
+  onCardOk(id:string){
+    this.stepper.next();
+  }
+
+  onPinOk(pin:string){
+
   }
 }

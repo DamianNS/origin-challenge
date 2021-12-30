@@ -9,10 +9,11 @@
     <mat-stepper linear #stepper>
       <mat-step>
           <ng-template matStepLabel>N° de Tarjeta</ng-template>
-          <app-home></app-home>
+          <app-home (cardOk)="onCardOk($event)"></app-home>
       </mat-step>
-      <mat-step [stepControl]="secondFormGroup" [editable]="false">
-        Nada
+      <mat-step>
+        <ng-template matStepLabel>N° de Pin</ng-template>
+        <app-pin (pinOk)="onPinOk($event)"></app-pin>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>

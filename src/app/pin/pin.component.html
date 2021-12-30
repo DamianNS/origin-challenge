@@ -1,7 +1,7 @@
-<h1>Ingrese numero de tarjeta</h1>
+<h1>Ingrese pin</h1>
 <div class="wrapper">
     <div class="box a">
-        <label style="margin: auto;" mat-input>{{ numTarj | creditCardMaskPipe}}</label>
+        <label mat-input>{{ numPin | pinMask}}</label>
     </div>
     <app-teclado class="box b" (pushKey)="pushNumber($event)"></app-teclado>
     <div class="box c">
